@@ -1,0 +1,13 @@
+ cd back-end
+ python3 -m venv .venv                                          
+ source .venv/bin/activate    
+ uvicorn main.py
+ uvicorn main:app --reload
+
+
+
+ to migration
+ alembic revision --autogenerate
+
+ alembic upgrade head
+ alembic downgrade base

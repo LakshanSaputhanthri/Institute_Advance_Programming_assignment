@@ -1,15 +1,12 @@
-from typing import Union
-
 from fastapi import FastAPI
+from api import student as student_api
+
+from db.db_setup import engine
+from db.models import student as student_model
 
 app = FastAPI()
+app.include_router(student_api.router,tags=["Student"])
 
 
-@app.get("/")
-async def read_root():
-    return {"Hello": "World"}
+student_model.Base.metadata.create_all(bind=engine)
 
-
-@app.get("/items/{item_id}")
-async def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
