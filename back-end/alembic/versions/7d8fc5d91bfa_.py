@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: c278ea7e444e
-Revises: 
-Create Date: 2024-01-09 05:50:14.591207
+Revision ID: 7d8fc5d91bfa
+Revises: 04c22bc7f8ed
+Create Date: 2024-01-14 08:09:47.325049
 
 """
 from typing import Sequence, Union
@@ -12,8 +12,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'c278ea7e444e'
-down_revision: Union[str, None] = None
+revision: str = '7d8fc5d91bfa'
+down_revision: Union[str, None] = '04c22bc7f8ed'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
@@ -27,10 +27,11 @@ def upgrade() -> None:
     sa.Column('email', sa.String(length=100), nullable=False),
     sa.Column('phone_number', sa.Integer(), nullable=False),
     sa.Column('address', sa.String(length=200), nullable=False),
-    sa.Column('ctreated_at', sa.DateTime(), nullable=False),
+    sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
+    op.add_column('students',sa.Column('grade',sa.Enum("grade_1","grade_2","grade_3","grade_4","grade_5","grade_6","grade_7","grade_8","grade_9","grade_10","grade_11","grade_12",name="grade"),nullable=True))
     op.create_index(op.f('ix_students_address'), 'students', ['address'], unique=False)
     op.create_index(op.f('ix_students_email'), 'students', ['email'], unique=True)
     op.create_index(op.f('ix_students_first_name'), 'students', ['first_name'], unique=False)

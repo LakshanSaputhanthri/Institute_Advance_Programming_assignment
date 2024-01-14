@@ -6,26 +6,13 @@ from .mixins import Timestamp
 from fastapi import APIRouter
 
 router = APIRouter()
-class Grade(enum.IntEnum):
-    grade_1 = 1
-    grade_2 = 2
-    grade_3 = 3
-    grade_4 = 4
-    grade_5 = 5
-    grade_6 = 6
-    grade_7 = 7
-    grade_8 = 8
-    grade_9 = 9
-    grade_10 = 10
-    grade_11 = 11
-    grade_12 = 12
 
-class Student(Timestamp,Base):
-    __tablename__="students"
+
+class User(Timestamp,Base):
+    __tablename__="users"
     id=Column(Integer,primary_key=True,index=True)
     first_name=Column(String(100),unique=False,index=True,nullable=False)
     last_name=Column(String(100),unique=False,index=True,nullable=False)
     email=Column(String(100),unique=True,index=True,nullable=False)
-    phone_number=Column(Integer,unique=False,index=True,nullable=False)
-    address=Column(String(200),unique=False,index=True,nullable=False)
-    grade=Column(Enum(Grade))
+    user_name=Column(String(100),unique=True,index=True,nullable=False)
+    password=Column(String(100),unique=False,index=True,nullable=False)
