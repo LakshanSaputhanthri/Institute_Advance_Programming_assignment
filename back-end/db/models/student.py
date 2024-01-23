@@ -22,10 +22,14 @@ class Grade(enum.IntEnum):
 
 class Student(Timestamp,Base):
     __tablename__="students"
-    id=Column(Integer,primary_key=True,index=True)
+    student_id=Column(Integer,primary_key=True,index=True)
     first_name=Column(String(100),unique=False,index=True,nullable=False)
     last_name=Column(String(100),unique=False,index=True,nullable=False)
     email=Column(String(100),unique=True,index=True,nullable=False)
     phone_number=Column(Integer,unique=False,index=True,nullable=False)
     address=Column(String(200),unique=False,index=True,nullable=False)
     grade=Column(Enum(Grade))
+    
+    attendance=relationship("Attendance",back_populates="student")
+    enrollment=relationship("Enrollment",back_populates="student")
+

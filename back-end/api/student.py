@@ -33,7 +33,7 @@ async def delete_student_by_id_api(id:int,db:Session=Depends(get_db)):
         raise HTTPException(status_code=404,detail="Student Not found")
     return  delete_student(db,student_id=id)
 
-@router.post("/student")
+@router.post("/students")
 async def create_students_api(student:StudentCreate,db:Session=Depends(get_db)):
     db_student=get_student_by_email(db=db,student_email=student.email)
     if db_student:
