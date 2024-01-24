@@ -16,6 +16,9 @@ import { Column } from "react-table";
 import { DataTable } from "../components/DataTable";
 import StudentRegistrationForm from "../components/forms/StudentRegisterForm";
 import { TitleBar } from "../components/TitleBar";
+import { apiCall } from "../util/apiHelper";
+import { API_STUDENT_URL } from "../util/config";
+import { useQuery } from "@tanstack/react-query";
 const style = {
   position: "absolute",
   top: "50%",
@@ -30,7 +33,7 @@ export const Student = () => {
   const handleChange = (event: SelectChangeEvent) => {
     setGrade(event.target.value as string);
   };
-  type Person = {
+  type Student = {
     studentNumber: string;
     firstName: string;
     lastName: string;
@@ -39,36 +42,28 @@ export const Student = () => {
     status: string;
     progress: number;
   };
-
-  const users: Person[] = [
-    {
-      studentNumber: "1",
-      firstName: "Tanner",
-      lastName: "Linsley",
-      age: 33,
-      visits: 100,
-      progress: 50,
-      status: "Married",
+  const { data } = useQuery({
+    queryKey: ["studentList"],
+    queryFn: async () => {
+      const response: Student[] = await apiCall({
+        method: "GET",
+        url: `${API_STUDENT_URL}?skip=0&limit=100`,
+      });
+      console.log(response);
+      return response;
     },
-    {
-      studentNumber: "2",
-      firstName: "Kevin",
-      lastName: "Vandy",
-      age: 27,
-      visits: 200,
-      progress: 100,
-      status: "Single",
-    },
-  ];
+  });
 
   const columns: Column[] = [
-    { Header: "Student Number", accessor: "studentNumber" },
-    { Header: "First Name", accessor: "firstName" },
-    { Header: "Last Name", accessor: "lastName" },
-    { Header: "Age", accessor: "age" },
-    { Header: "Visits", accessor: "visits" },
-    { Header: "Progress", accessor: "progress" },
-    { Header: "Status", accessor: "status" },
+    {
+      Header: "Student Number",
+      accessor: "student_id",
+      id: "studentNumber",
+    },
+    { Header: "First Name", accessor: "first_name", id: "firstNamer" },
+    { Header: "Last Name", accessor: "last_name", id: "lastName" },
+    { Header: "Address", accessor: "address", id: "sage" },
+    { Header: "Email", accessor: "email", id: "visits" },
   ];
 
   return (
@@ -114,7 +109,7 @@ export const Student = () => {
           Add New
         </Button>
       </Stack>
-      <DataTable data={users} columns={columns} />
+      {data && <DataTable data={data} columns={columns} />}
       <Modal open={isOpen}>
         <Box
           sx={{

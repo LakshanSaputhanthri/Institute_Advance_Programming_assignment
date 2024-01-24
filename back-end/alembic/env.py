@@ -7,6 +7,12 @@ from alembic import context
 
 from db.db_setup import Base
 from db.models import student
+from db.models import teacher
+from db.models import subject
+from db.models import attendance
+from db.models import enrollment
+from db.models import classes
+
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

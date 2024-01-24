@@ -8,11 +8,13 @@ from fastapi import APIRouter
 router = APIRouter()
 
 
-class User(Timestamp,Base):
-    __tablename__="users"
-    id=Column(Integer,primary_key=True,index=True)
+class Teacher(Timestamp,Base):
+    __tablename__="teachers"
+    teacher_id=Column(Integer,primary_key=True,index=True)
     first_name=Column(String(100),unique=False,index=True,nullable=False)
     last_name=Column(String(100),unique=False,index=True,nullable=False)
     email=Column(String(100),unique=True,index=True,nullable=False)
-    user_name=Column(String(100),unique=True,index=True,nullable=False)
-    password=Column(String(100),unique=False,index=True,nullable=False)
+    phone_number=Column(Integer,unique=False,index=True,nullable=False)
+    address=Column(String(200),unique=False,index=True,nullable=False)
+    
+    classes=relationship("Class",back_populates="teachers")
