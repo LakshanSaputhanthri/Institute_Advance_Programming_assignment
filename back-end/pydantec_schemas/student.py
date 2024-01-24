@@ -13,7 +13,7 @@ class StudentCreate(StudentBase):
     phone_number:int
 
 class Student(StudentBase):
-    id:int
+    student_id:int
     created_at:datetime
     updated_at:datetime
     first_name:str

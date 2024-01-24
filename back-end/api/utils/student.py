@@ -12,7 +12,7 @@ def create_student(db:Session,student:StudentCreate):
 
 #delete student
 def delete_student(db:Session,student_id:int):
-    delete_row=db.query(Student).filter(Student.id==student_id).delete()
+    delete_row=db.query(Student).filter(Student.student_id==student_id).delete()
     db.commit()
     return delete_row
 
@@ -22,7 +22,7 @@ def get_students(db:Session,skip:int=0,limit:int=100):
 
 #get student using student_id
 def get_student(db:Session,student_id:int):
-    return db.query(Student).filter(Student.id==student_id).first()
+    return db.query(Student).filter(Student.student_id==student_id).first()
 
 #get student using email
 def get_student_by_email(db:Session,student_email:str):

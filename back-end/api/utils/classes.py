@@ -9,13 +9,7 @@ def create_class(db:Session,classs:ClassCreate):
     db.refresh(db_class)
     return db_class
 
-#delete teacher
-# def delete_teacher(db:Session,teacher_id:int):
-#     delete_row=db.query(Teacher).filter(Teacher.id==teacher_id).delete()
-#     db.commit()
-#     return delete_row
-
-#get all teachers
+#get all classes
 def get_classes(db:Session,skip:int=0,limit:int=100):
     return db.query(Class).offset(skip).limit(limit).all()
 

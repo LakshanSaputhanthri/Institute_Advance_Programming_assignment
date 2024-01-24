@@ -4,7 +4,7 @@ from pydantec_schemas.teacher import TeacherCreate
 
 #create teacher
 def create_teacher(db:Session,teacher:TeacherCreate):
-    db_teacher=teacher(email=teacher.email,first_name=teacher.first_name,last_name=teacher.last_name,phone_number=teacher.phone_number,address=teacher.address,subject=teacher.subject)
+    db_teacher=Teacher(email=teacher.email,first_name=teacher.first_name,last_name=teacher.last_name,phone_number=teacher.phone_number,address=teacher.address)
     db.add(db_teacher)
     db.commit()
     db.refresh(db_teacher)
@@ -12,7 +12,7 @@ def create_teacher(db:Session,teacher:TeacherCreate):
 
 #delete teacher
 def delete_teacher(db:Session,teacher_id:int):
-    delete_row=db.query(Teacher).filter(Teacher.id==teacher_id).delete()
+    delete_row=db.query(Teacher).filter(Teacher.teacher_id==teacher_id).delete()
     db.commit()
     return delete_row
 
@@ -22,7 +22,7 @@ def get_teachers(db:Session,skip:int=0,limit:int=100):
 
 #get teacher using teacher_id
 def get_teacher(db:Session,teacher_id:int):
-    return db.query(Teacher).filter(Teacher.id==teacher_id).first()
+    return db.query(Teacher).filter(Teacher.teacher_id==teacher_id).first()
 
 #get teacher using email
 def get_teacher_by_email(db:Session,teacher_email:str):

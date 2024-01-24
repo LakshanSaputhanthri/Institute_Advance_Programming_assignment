@@ -45,7 +45,7 @@ export const Student = () => {
   const { data } = useQuery({
     queryKey: ["studentList"],
     queryFn: async () => {
-      const response: Student = await apiCall({
+      const response: Student[] = await apiCall({
         method: "GET",
         url: `${API_STUDENT_URL}?skip=0&limit=100`,
       });
@@ -57,15 +57,13 @@ export const Student = () => {
   const columns: Column[] = [
     {
       Header: "Student Number",
-      accessor: "id",
+      accessor: "student_id",
       id: "studentNumber",
     },
-    { Header: "First Name", accessor: "firstName", id: "firstNamer" },
-    { Header: "Last Name", accessor: "lastName", id: "lastName" },
-    { Header: "Age", accessor: "age", id: "sage" },
-    { Header: "Visits", accessor: "visits", id: "visits" },
-    { Header: "Progress", accessor: "progress", id: "progress" },
-    { Header: "Status", accessor: "status", id: "status" },
+    { Header: "First Name", accessor: "first_name", id: "firstNamer" },
+    { Header: "Last Name", accessor: "last_name", id: "lastName" },
+    { Header: "Address", accessor: "address", id: "sage" },
+    { Header: "Email", accessor: "email", id: "visits" },
   ];
 
   return (

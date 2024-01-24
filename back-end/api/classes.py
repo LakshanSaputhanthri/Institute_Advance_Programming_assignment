@@ -8,6 +8,8 @@ from sqlalchemy.orm import Session
 from pydantec_schemas.classes import Class
 from db.db_setup import get_db
 from api.utils.classes import create_class,get_classes
+from pydantec_schemas.classes import ClassCreate,Class
+
 
 router=fastapi.APIRouter()
 
@@ -17,6 +19,10 @@ router=fastapi.APIRouter()
 async def get_class_api(skip:int=0,limit:int=100,db:Session=Depends(get_db)):
     classes=get_classes(db,skip=skip,limit=limit)
     return classes
+
+@router.post("/class")
+async def create_class_api(classes:ClassCreate,db:Session=Depends(get_db)):
+    return create_class(db=db,classes=classes)
 
 # @router.post("/class")
 # async def create_teacher_api(teacher:TeacherCreate,db:Session=Depends(get_db)):

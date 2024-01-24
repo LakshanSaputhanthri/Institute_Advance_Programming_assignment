@@ -6,16 +6,19 @@ class EnrollmentBase(BaseModel):
    pass
 
 class EnrollmentCreate(EnrollmentBase):
-    enrollment_id=int
-    student_id=int
-    class_id=int
+    enrollment_id:int
+    student_id:int
+    class_id:int
+    
+    
 
 class Enrollment(EnrollmentBase):
     enrollment_id:int
-    student_id=int
-    class_id=int
+    class_id:int
+    student_id:int
     created_at:datetime
     updated_at:datetime
+    
     
     
     class config:

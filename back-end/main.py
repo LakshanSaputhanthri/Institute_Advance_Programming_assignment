@@ -4,6 +4,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from api import student as student_api
 from api import teachers as teacher_api
 from api import classes as class_api
+from api import subject as subject_api
+from api import enrollment as enrollment_api
+from api import attendance as attendance_api
 
 
 
@@ -25,6 +28,9 @@ app = FastAPI(
 app.include_router(student_api.router,tags=["Student"])
 app.include_router(teacher_api.router,tags=["Teacher"])
 app.include_router(class_api.router,tags=["Class"])
+app.include_router(subject_api.router,tags=["Subject"])
+app.include_router(enrollment_api.router,tags=["Enrollment"])
+app.include_router(attendance_api.router,tags=["Attendance"])
 
 
 student_model.Base.metadata.create_all(bind=engine)

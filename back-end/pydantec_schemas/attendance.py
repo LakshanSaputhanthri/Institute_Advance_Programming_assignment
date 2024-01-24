@@ -7,13 +7,13 @@ class AttendanceBase(BaseModel):
 
 class AttendanceCreate(AttendanceBase):
     class_id:int
-    subject_id:int
+    student_id:int
+    isPresent:bool
 
 class Attendance(AttendanceBase):
     attendance_id:int
     created_at:datetime
     updated_at:datetime
-    subject_id:int
     
     class config:
         orm_mode:True

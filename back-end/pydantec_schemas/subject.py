@@ -10,9 +10,10 @@ class SubjectCreate(SubjectBase):
     
 
 class Subject(SubjectBase):
-    id:int
+    subject_id:int
     created_at:datetime
     updated_at:datetime
+    
     
     
     class config:

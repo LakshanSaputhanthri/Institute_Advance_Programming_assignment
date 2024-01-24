@@ -16,6 +16,7 @@ router=fastapi.APIRouter()
     
 @router.get("/students",response_model=List[Student])
 async def get_students_api(skip:int=0,limit:int=100,db:Session=Depends(get_db)):
+    print("sss")
     students=get_students(db,skip=skip,limit=limit)
     return students
 

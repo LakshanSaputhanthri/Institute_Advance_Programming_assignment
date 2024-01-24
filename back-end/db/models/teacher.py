@@ -17,4 +17,4 @@ class Teacher(Timestamp,Base):
     phone_number=Column(Integer,unique=False,index=True,nullable=False)
     address=Column(String(200),unique=False,index=True,nullable=False)
     
-    classes=relationship("Class",back_populates="teacher")
+    classes=relationship("Class",back_populates="teachers")

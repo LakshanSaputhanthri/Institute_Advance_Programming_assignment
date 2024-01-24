@@ -12,7 +12,7 @@ class TeacherCreate(TeacherBase):
     phone_number:int
 
 class Teacher(TeacherBase):
-    id:int
+    teacher_id:int
     created_at:datetime
     updated_at:datetime
     first_name:str
