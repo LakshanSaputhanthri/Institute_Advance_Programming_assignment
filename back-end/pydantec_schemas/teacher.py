@@ -4,8 +4,16 @@ from datetime import datetime
 
 class TeacherBase(BaseModel):
     email:str
+    nic_number:str
+
+
 
 class TeacherCreate(TeacherBase):
+    first_name:str
+    last_name:str
+    address:str
+    phone_number:int
+class TeacherUpdate(TeacherBase):
     first_name:str
     last_name:str
     address:str
@@ -19,6 +27,7 @@ class Teacher(TeacherBase):
     last_name:str
     address:str
     phone_number:int
+
     
     class config:
         orm_mode:True

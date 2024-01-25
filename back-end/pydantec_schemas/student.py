@@ -3,10 +3,14 @@ from datetime import datetime
 
 
 class StudentBase(BaseModel):
-    email:str
     grade:int 
 
 class StudentCreate(StudentBase):
+    first_name:str
+    last_name:str
+    address:str
+    phone_number:int
+class StudentUpdate(StudentBase):
     first_name:str
     last_name:str
     address:str

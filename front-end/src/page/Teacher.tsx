@@ -3,8 +3,12 @@ import { Layout } from "../components/Layout";
 import { Box, Button, Modal, Stack, TextField } from "@mui/material";
 import { Column } from "react-table";
 import { DataTable } from "../components/DataTable";
-import StudentRegistrationForm from "../components/forms/StudentRegisterForm";
 import { TitleBar } from "../components/TitleBar";
+import { Teacher } from "../types/teacher";
+import {
+  useDeleteTeacherMutation,
+  useGetTeachers,
+} from "../services/teacherService";
 const style = {
   position: "absolute",
   top: "50%",
@@ -12,49 +16,44 @@ const style = {
   transform: "translate(-50%, -50%)",
   boxShadow: 24,
 };
+import DeleteIcon from "@mui/icons-material/Delete";
+import TeacherRegistrationForm from "../components/forms/TeacherRegisterForm";
+import EditNoteIcon from "@mui/icons-material/EditNote";
+import TeacherDetailsEditForm from "../components/forms/editForms/TeacherDetailEditForm";
 
-export const Teacher = () => {
+export const TeacherPage = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { data } = useGetTeachers();
+  const deleteMutation = useDeleteTeacherMutation();
+  const [isEditFormOpen, setIsEditFormOpen] = useState(false);
+  const [teacherId, setTeacherId] = useState<number>(0);
 
-  type Person = {
-    teacherId: string;
-    firstName: string;
-    lastName: string;
-    age: number;
-    visits: number;
-    status: string;
-    progress: number;
-  };
-
-  const users: Person[] = [
+  const columns: Column<Teacher>[] = [
+    { Header: "Teacher Id", accessor: "teacher_id" },
+    { Header: "First Name", accessor: "first_name", id: "firstNamer" },
+    { Header: "Last Name", accessor: "last_name", id: "lastName" },
+    { Header: "NIC Number", accessor: "nic_number", id: "nic_number" },
+    { Header: "Address", accessor: "address", id: "sage" },
+    { Header: "Email", accessor: "email", id: "visits" },
+    { Header: "Phone Number", accessor: "phone_number", id: "phone_number" },
     {
-      teacherId: "1",
-      firstName: "Tanner",
-      lastName: "Linsley",
-      age: 33,
-      visits: 100,
-      progress: 50,
-      status: "Married",
+      Header: "Action",
+      id: "action",
+      Cell: ({ row }) => (
+        <>
+          <DeleteIcon
+            sx={{ color: "red" }}
+            onClick={() => deleteMutation.mutate(row.original.teacher_id)}
+          />
+          <EditNoteIcon
+            sx={{ color: "blue" }}
+            onClick={() => {
+              setIsEditFormOpen(true), setTeacherId(row.original.teacher_id);
+            }}
+          />
+        </>
+      ),
     },
-    {
-      teacherId: "2",
-      firstName: "Kevin",
-      lastName: "Vandy",
-      age: 27,
-      visits: 200,
-      progress: 100,
-      status: "Single",
-    },
-  ];
-
-  const columns: Column[] = [
-    { Header: "Teacher Id", accessor: "teacherId" },
-    { Header: "First Name", accessor: "firstName" },
-    { Header: "Last Name", accessor: "lastName" },
-    { Header: "Age", accessor: "age" },
-    { Header: "Visits", accessor: "visits" },
-    { Header: "Progress", accessor: "progress" },
-    { Header: "Status", accessor: "status" },
   ];
 
   return (
@@ -85,7 +84,7 @@ export const Teacher = () => {
           Add New
         </Button>
       </Stack>
-      <DataTable data={users} columns={columns} />
+      {data && <DataTable data={data} columns={columns} />}
       <Modal open={isOpen}>
         <Box
           sx={{
@@ -95,7 +94,22 @@ export const Teacher = () => {
             justifyContent: "center",
           }}
         >
-          <StudentRegistrationForm onCancel={() => setIsOpen(false)} />
+          <TeacherRegistrationForm onCancel={() => setIsOpen(false)} />
+        </Box>
+      </Modal>
+      <Modal open={isEditFormOpen}>
+        <Box
+          sx={{
+            ...style,
+            width: "60%",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <TeacherDetailsEditForm
+            onCancel={() => setIsEditFormOpen(false)}
+            teacherId={teacherId}
+          />
         </Box>
       </Modal>
 

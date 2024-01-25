@@ -1,0 +1,15 @@
+export const gradeList = [
+  { grade: "Grade 1", value: 1 },
+  { grade: "Grade 2", value: 2 },
+  { grade: "Grade 3", value: 3 },
+  { grade: "Grade 4", value: 4 },
+  { grade: "Grade 5", value: 5 },
+  { grade: "Grade 6", value: 6 },
+  { grade: "Grade 7", value: 7 },
+  { grade: "Grade 8", value: 8 },
+  { grade: "Grade 9", value: 9 },
+  { grade: "Grade 10", value: 10 },
+  { grade: "Grade 11", value: 11 },
+  { grade: "Grade 12", value: 12 },
+  { grade: "Grade 13", value: 13 },
+];

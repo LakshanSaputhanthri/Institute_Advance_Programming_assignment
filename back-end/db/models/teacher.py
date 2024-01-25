@@ -15,6 +15,7 @@ class Teacher(Timestamp,Base):
     last_name=Column(String(100),unique=False,index=True,nullable=False)
     email=Column(String(100),unique=True,index=True,nullable=False)
     phone_number=Column(Integer,unique=False,index=True,nullable=False)
+    nic_number=Column(String(10),unique=False,index=True,nullable=False)
     address=Column(String(200),unique=False,index=True,nullable=False)
     
     classes=relationship("Class",back_populates="teachers")
