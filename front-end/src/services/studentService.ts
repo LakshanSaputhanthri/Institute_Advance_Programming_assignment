@@ -48,7 +48,6 @@ export const useStudentUpdateMutations = (student_id: number) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (data: StudentEditForm) => {
-      console.log(data);
       return apiCall<Student, StudentEditForm>({
         url: `${API_STUDENT_URL}/${student_id}`,
         json: data,
