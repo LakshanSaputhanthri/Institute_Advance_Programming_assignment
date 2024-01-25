@@ -16,9 +16,15 @@ import { Column } from "react-table";
 import { DataTable } from "../components/DataTable";
 import StudentRegistrationForm from "../components/forms/StudentRegisterForm";
 import { TitleBar } from "../components/TitleBar";
-import { apiCall } from "../util/apiHelper";
-import { API_STUDENT_URL } from "../util/config";
-import { useQuery } from "@tanstack/react-query";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditNoteIcon from "@mui/icons-material/EditNote";
+import {
+  useDeleteStudentMutation,
+  useGetStudents,
+} from "../services/studentService";
+import { Student } from "../types/students";
+import { gradeList } from "../state/gradeList";
+import StudentDetailEditForm from "../components/forms/editForms/StudentDetailEditForm";
 const style = {
   position: "absolute",
   top: "50%",
@@ -27,34 +33,20 @@ const style = {
   boxShadow: 24,
 };
 
-export const Student = () => {
+export const StudentPage = () => {
   const [grade, setGrade] = React.useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [isEditFormOpen, setIsEditFormOpen] = useState(false);
+
   const handleChange = (event: SelectChangeEvent) => {
     setGrade(event.target.value as string);
   };
-  type Student = {
-    studentNumber: string;
-    firstName: string;
-    lastName: string;
-    age: number;
-    visits: number;
-    status: string;
-    progress: number;
-  };
-  const { data } = useQuery({
-    queryKey: ["studentList"],
-    queryFn: async () => {
-      const response: Student[] = await apiCall({
-        method: "GET",
-        url: `${API_STUDENT_URL}?skip=0&limit=100`,
-      });
-      console.log(response);
-      return response;
-    },
-  });
+  const deleteMutation = useDeleteStudentMutation();
 
-  const columns: Column[] = [
+  const { data } = useGetStudents();
+  const [studentId, setStudentId] = useState<number>(0);
+
+  const columns: Column<Student>[] = [
     {
       Header: "Student Number",
       accessor: "student_id",
@@ -63,7 +55,25 @@ export const Student = () => {
     { Header: "First Name", accessor: "first_name", id: "firstNamer" },
     { Header: "Last Name", accessor: "last_name", id: "lastName" },
     { Header: "Address", accessor: "address", id: "sage" },
-    { Header: "Email", accessor: "email", id: "visits" },
+    { Header: "Phone Number", accessor: "phone_number", id: "phone_number" },
+    {
+      Header: "Action",
+      id: "action",
+      Cell: ({ row }) => (
+        <Stack gap={1} direction={"row"}>
+          <EditNoteIcon
+            sx={{ color: "blue" }}
+            onClick={() => {
+              setIsEditFormOpen(true), setStudentId(row.original.student_id);
+            }}
+          />
+          <DeleteIcon
+            sx={{ color: "red" }}
+            onClick={() => deleteMutation.mutate(row.original.student_id)}
+          />
+        </Stack>
+      ),
+    },
   ];
 
   return (
@@ -100,7 +110,9 @@ export const Student = () => {
               onChange={handleChange}
             >
               {gradeList.map((grade) => (
-                <MenuItem value={grade.value}>{grade.grade}</MenuItem>
+                <MenuItem value={grade.value} key={grade.value}>
+                  {grade.grade}
+                </MenuItem>
               ))}
             </Select>
           </FormControl>
@@ -122,24 +134,21 @@ export const Student = () => {
           <StudentRegistrationForm onCancel={() => setIsOpen(false)} />
         </Box>
       </Modal>
-
-      {/* Display the table */}
+      <Modal open={isEditFormOpen}>
+        <Box
+          sx={{
+            ...style,
+            width: "60%",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <StudentDetailEditForm
+            onCancel={() => setIsEditFormOpen(false)}
+            studentId={studentId}
+          />
+        </Box>
+      </Modal>
     </Layout>
   );
 };
-
-const gradeList = [
-  { grade: "Grade 1", value: 1 },
-  { grade: "Grade 2", value: 2 },
-  { grade: "Grade 3", value: 3 },
-  { grade: "Grade 4", value: 4 },
-  { grade: "Grade 5", value: 5 },
-  { grade: "Grade 6", value: 6 },
-  { grade: "Grade 7", value: 7 },
-  { grade: "Grade 8", value: 8 },
-  { grade: "Grade 9", value: 9 },
-  { grade: "Grade 10", value: 10 },
-  { grade: "Grade 11", value: 11 },
-  { grade: "Grade 12", value: 12 },
-  { grade: "Grade 13", value: 13 },
-];

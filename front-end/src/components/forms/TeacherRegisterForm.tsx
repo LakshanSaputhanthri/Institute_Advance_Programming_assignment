@@ -7,29 +7,24 @@ import {
   Paper,
   Box,
   Stack,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
 } from "@mui/material";
-import { useStudentCreateMutations } from "../../services/studentService";
-import { StudentForm } from "../../types/students";
 import { toast } from "react-toastify";
-import { gradeList } from "../../state/gradeList";
+import { TeacherForm } from "../../types/teacher";
+import { useTeacherCreateMutations } from "../../services/teacherService";
 
 interface Props {
   onCancel: () => void;
 }
-const StudentRegistrationForm = ({ onCancel }: Props) => {
-  const createMutation = useStudentCreateMutations();
+const TeacherRegistrationForm = ({ onCancel }: Props) => {
+  const createMutation = useTeacherCreateMutations();
 
-  const [formData, setFormData] = useState<StudentForm>({
+  const [formData, setFormData] = useState<TeacherForm>({
     first_name: "",
     last_name: "",
+    email: "",
     phone_number: 0,
     address: "",
-    grade: 0,
+    nic_number: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,12 +35,9 @@ const StudentRegistrationForm = ({ onCancel }: Props) => {
     e.preventDefault();
     createMutation.mutate(formData, {
       onSuccess: () => {
-        toast.success("Create Student Successfully"), onCancel();
+        toast.success("Create Teacher Successfully"), onCancel();
       },
     });
-  };
-  const handleGradeChange = (event: SelectChangeEvent) => {
-    setFormData({ ...formData, grade: +event.target.value });
   };
 
   return (
@@ -60,7 +52,7 @@ const StudentRegistrationForm = ({ onCancel }: Props) => {
         }}
       >
         <Typography component="h1" variant="h5">
-          Student Registration
+          Teacher Registration
         </Typography>
         <form onSubmit={handleSubmit} style={{ width: "100%", marginTop: 16 }}>
           <Grid container spacing={2}>
@@ -86,7 +78,29 @@ const StudentRegistrationForm = ({ onCancel }: Props) => {
                 onChange={handleChange}
               />
             </Grid>
-
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                label="Nic Number"
+                name="nic_number"
+                value={formData.nic_number}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                label="Email Address"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -109,25 +123,6 @@ const StudentRegistrationForm = ({ onCancel }: Props) => {
                 value={formData.address}
                 onChange={handleChange}
               />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Grade</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  name="grade"
-                  value={formData.grade.toString()}
-                  label="Grade"
-                  onChange={handleGradeChange}
-                >
-                  {gradeList.map((item) => (
-                    <MenuItem key={item.value} value={item.value}>
-                      {item.grade}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
             </Grid>
           </Grid>
           <Stack
@@ -160,4 +155,4 @@ const StudentRegistrationForm = ({ onCancel }: Props) => {
   );
 };
 
-export default StudentRegistrationForm;
+export default TeacherRegistrationForm;

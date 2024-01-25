@@ -45,6 +45,7 @@ export const SideBar = () => {
           link={item.link}
           icon={item.icon}
           selected={pathname.includes(item.link)}
+          key={item.title}
         />
       ))}
     </Box>

@@ -4,7 +4,7 @@ from pydantec_schemas.student import StudentCreate
 
 #create student
 def create_student(db:Session,student:StudentCreate):
-    db_student=Student(email=student.email,first_name=student.first_name,last_name=student.last_name,phone_number=student.phone_number,address=student.address,grade=student.grade)
+    db_student=Student(first_name=student.first_name,last_name=student.last_name,phone_number=student.phone_number,address=student.address,grade=student.grade)
     db.add(db_student)
     db.commit()
     db.refresh(db_student)
@@ -16,6 +16,16 @@ def delete_student(db:Session,student_id:int):
     db.commit()
     return delete_row
 
+#update student
+def update_student(db:Session,updated_student:Student,student_id:int):
+     existing_student = db.query(Student).filter(Student.student_id == student_id).first()
+     if existing_student:
+        for key, value in updated_student.dict().items():
+            setattr(existing_student, key, value)
+        db.commit()
+        return existing_student
+
+     
 #get all students
 def get_students(db:Session,skip:int=0,limit:int=100):
     return db.query(Student).offset(skip).limit(limit).all()

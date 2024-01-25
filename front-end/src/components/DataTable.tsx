@@ -11,9 +11,9 @@ import {
 import { useTable, Column } from "react-table";
 import { theme } from "../theme";
 
-interface Props<T> {
+interface Props<T extends object> {
   data: T[];
-  columns: Column[];
+  columns: Column<T>[];
 }
 
 export const DataTable = <T extends Record<string, unknown>>({

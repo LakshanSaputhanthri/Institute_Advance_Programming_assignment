@@ -5,9 +5,9 @@ from  fastapi import Depends,HTTPException
 from sqlalchemy.orm import Session
 
 
-from pydantec_schemas.teacher import Teacher,TeacherCreate
+from pydantec_schemas.teacher import Teacher,TeacherCreate,TeacherUpdate
 from db.db_setup import get_db
-from api.utils.teacher import create_teacher,delete_teacher,get_teacher_by_email,get_teachers,get_teacher
+from api.utils.teacher import create_teacher,delete_teacher,get_teacher_by_email,get_teachers,get_teacher,update_teacher
 
 
 router=fastapi.APIRouter()
@@ -39,3 +39,10 @@ async def create_teacher_api(teacher:TeacherCreate,db:Session=Depends(get_db)):
     if db_teacher:
         raise HTTPException(status_code=400,detail="This email already exist")
     return create_teacher(db=db,teacher=teacher)
+
+@router.put("/teachers/{id}")
+async def update_student_api(teacher_id:int,payload:TeacherUpdate,db:Session=Depends(get_db)):
+    teacher=get_teacher(db,teacher_id=teacher_id)
+    if teacher==None:
+        raise HTTPException(status_code=404,detail="Teacher Not found")
+    return update_teacher(db,updated_teacher=payload,teacher_id=teacher.teacher_id)
