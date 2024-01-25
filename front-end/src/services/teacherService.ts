@@ -28,13 +28,12 @@ export const useGetTeacher = (id: number) => {
   });
 };
 
-export const useStudentUpdateMutations = (student_id: number) => {
+export const useStudentUpdateMutations = (teacher_id: number) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (data: TeacherEditForm) => {
-      console.log(data);
       return apiCall<Teacher, TeacherEditForm>({
-        url: `${API_TEACHER_URL}/${student_id}`,
+        url: `${API_TEACHER_URL}/${teacher_id}`,
         json: data,
         method: "PUT",
       });

@@ -41,8 +41,8 @@ async def create_teacher_api(teacher:TeacherCreate,db:Session=Depends(get_db)):
     return create_teacher(db=db,teacher=teacher)
 
 @router.put("/teachers/{id}")
-async def update_student_api(teacher_id:int,payload:TeacherUpdate,db:Session=Depends(get_db)):
-    teacher=get_teacher(db,teacher_id=teacher_id)
+async def update_student_api(id:int,payload:TeacherUpdate,db:Session=Depends(get_db)):
+    teacher=get_teacher(db,teacher_id=id)
     if teacher==None:
         raise HTTPException(status_code=404,detail="Teacher Not found")
     return update_teacher(db,updated_teacher=payload,teacher_id=teacher.teacher_id)

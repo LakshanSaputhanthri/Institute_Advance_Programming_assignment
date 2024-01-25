@@ -41,7 +41,7 @@ const TeacherDetailsEditForm = ({ onCancel, teacherId }: Props) => {
     e.preventDefault();
     teacherUpdateMutation.mutate(formData, {
       onSuccess: () => {
-        toast.success("Create Teacher Successfully"), onCancel();
+        toast.success("Updated Teacher Successfully"), onCancel();
       },
     });
   };
@@ -60,102 +60,107 @@ const TeacherDetailsEditForm = ({ onCancel, teacherId }: Props) => {
         <Typography component="h1" variant="h5">
           Teacher Registration
         </Typography>
-        <form onSubmit={handleSubmit} style={{ width: "100%", marginTop: 16 }}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                label="First Name"
-                name="first_name"
-                value={formData.first_name}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                label="Last Name"
-                name="last_name"
-                value={formData.last_name}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                label="Nic Number"
-                name="nic_number"
-                value={formData.nic_number}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                label="Email Address"
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                label="Phone Number"
-                name="phone_number"
-                type="tel"
-                value={formData.phone_number}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                label="Address"
-                name="address"
-                value={formData.address}
-                onChange={handleChange}
-              />
-            </Grid>
-          </Grid>
-          <Stack
-            display={"flex"}
-            flexDirection={"row"}
-            gap={2}
-            justifyContent={"end"}
+        {teacherData && (
+          <form
+            onSubmit={handleSubmit}
+            style={{ width: "100%", marginTop: 16 }}
           >
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              style={{ marginTop: 16 }}
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="First Name"
+                  name="first_name"
+                  value={formData.first_name}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="Last Name"
+                  name="last_name"
+                  value={formData.last_name}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="Nic Number"
+                  name="nic_number"
+                  value={formData.nic_number}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="Email Address"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="Phone Number"
+                  name="phone_number"
+                  type="tel"
+                  value={formData.phone_number}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="Address"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleChange}
+                />
+              </Grid>
+            </Grid>
+            <Stack
+              display={"flex"}
+              flexDirection={"row"}
+              gap={2}
+              justifyContent={"end"}
             >
-              Register
-            </Button>
-            <Button
-              type="button"
-              variant="contained"
-              color="primary"
-              style={{ marginTop: 16 }}
-              onClick={() => onCancel()}
-            >
-              Cancel
-            </Button>
-          </Stack>
-        </form>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                style={{ marginTop: 16 }}
+              >
+                Register
+              </Button>
+              <Button
+                type="button"
+                variant="contained"
+                color="primary"
+                style={{ marginTop: 16 }}
+                onClick={() => onCancel()}
+              >
+                Cancel
+              </Button>
+            </Stack>
+          </form>
+        )}
       </Paper>
     </Box>
   );
