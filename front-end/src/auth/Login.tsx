@@ -51,7 +51,7 @@ const Login: React.FC = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Link to={"/home"}>
+          <Link to={"/student"}>
             <Button fullWidth variant="contained" onClick={() => handleLogin()}>
               Login
             </Button>

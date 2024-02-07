@@ -5,7 +5,6 @@ from  fastapi import Depends,HTTPException
 from sqlalchemy.orm import Session
 
 
-from pydantec_schemas.classes import Class
 from db.db_setup import get_db
 from api.utils.classes import create_class,get_classes
 from pydantec_schemas.classes import ClassCreate,Class
