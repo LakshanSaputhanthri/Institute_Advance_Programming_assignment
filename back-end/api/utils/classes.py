@@ -1,17 +1,17 @@
 from sqlalchemy.orm import Session
-from db.models.classes import Class 
-from pydantec_schemas.classes import Class,ClassCreate
+from db.models.classes import Class as ClassModel
+from pydantec_schemas.classes import ClassCreate
 
 #create class
-def create_class(db:Session,classs:ClassCreate):
-    db_class=classs(teacher_id=classs.teacher_id)
+def create_class(db: Session, classes: ClassCreate):
+    db_class = ClassModel(teacher_id=classes.teacher_id, subject_id=classes.subject_id)
+    db.add(db_class)  # Add the instance to the session
     db.commit()
     db.refresh(db_class)
     return db_class
-
 #get all classes
 def get_classes(db:Session,skip:int=0,limit:int=100):
-    return db.query(Class).offset(skip).limit(limit).all()
+    return db.query(ClassModel).offset(skip).limit(limit).all()
 
 #get teacher using teacher_id
 # def get_teacher(db:Session,teacher_id:int):

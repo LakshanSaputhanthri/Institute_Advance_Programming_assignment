@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "../auth/Login";
-import { HomePage } from "../page/Home";
 import { StudentPage } from "../page/Student";
 import { Payment } from "../page/Payments";
 import { Attendance } from "../page/Attendance";
@@ -13,7 +12,6 @@ export const AppRoutes = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/home" element={<HomePage />} />
           <Route path="/student" element={<StudentPage />} />
 
           <Route path="/class" element={<Class />} />

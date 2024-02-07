@@ -16,7 +16,7 @@ class Class(Timestamp, Base):
 
     
     teachers = relationship("Teacher", back_populates="classes")
-    subject = relationship("Subject", back_populates="classes", primaryjoin="Class.subject_id == Subject.subject_id")
+    subject = relationship("Subject", back_populates="classes")
     attendance=relationship("Attendance",back_populates="classes")
     enrollment=relationship("Enrollment",back_populates="classes")
 

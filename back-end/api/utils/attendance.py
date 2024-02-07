@@ -4,7 +4,7 @@ from pydantec_schemas.attendance import AttendanceCreate
 
 #create Attendance
 def create_attendance(db:Session,attendance:AttendanceCreate):
-    db_attendance=Attendance(student_id=attendance.subject_id,class_id=attendance.class_id,isPresent=attendance.isPresent)
+    db_attendance=Attendance(student_id=attendance.student_id,class_id=attendance.class_id,isPresent=attendance.isPresent)
     db.add(db_attendance)
     db.commit()
     db.refresh(db_attendance)

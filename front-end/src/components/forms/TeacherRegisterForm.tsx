@@ -41,7 +41,7 @@ const TeacherRegistrationForm = ({ onCancel }: Props) => {
   };
 
   return (
-    <Box sx={{ display: "100rem" }}>
+    <Box sx={{ width: "100%" }}>
       <Paper
         elevation={3}
         style={{
