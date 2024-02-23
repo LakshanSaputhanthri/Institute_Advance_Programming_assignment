@@ -15,11 +15,10 @@ import {
 import { Column } from "react-table";
 import { DataTable } from "../components/DataTable";
 import { TitleBar } from "../components/TitleBar";
-import EditNoteIcon from "@mui/icons-material/EditNote";
 import { gradeList } from "../state/gradeList";
 import ClassRegistrationForm from "../components/forms/ClassRegisterForm";
-import { useGetclass } from "../services/classService";
 import { StudentClass } from "../types/class";
+import { useGetClass } from "../services/classService";
 const style = {
   position: "absolute",
   top: "50%",
@@ -38,20 +37,27 @@ export const Class = () => {
   };
   // const deleteMutation = useDeleteStudentMutation();
 
-  const { data } = useGetclass();
+  const { data } = useGetClass();
   // const [studentId, setStudentId] = useState<number>(0);
 
   const columns: Column<StudentClass>[] = [
     { Header: "Class Name", accessor: "class_name", id: "className" },
-    { Header: "Teacher Name", accessor: "class_name", id: "className" },
-    { Header: "Subject Name", accessor: "class_name", id: "className" },
-
     {
-      Header: "Action",
-      id: "action",
-      Cell: () => (
+      Header: "Teacher Name",
+      id: "teacherId",
+      Cell: ({ row }) => (
         <Stack gap={1} direction={"row"}>
-          <EditNoteIcon sx={{ color: "blue" }} />
+          {row.original.teacher.first_name}&nbsp;
+          {row.original.teacher.last_name}
+        </Stack>
+      ),
+    },
+    {
+      Header: "Subject Name",
+      id: "subjectId",
+      Cell: ({ row }) => (
+        <Stack gap={1} direction={"row"}>
+          {row.original.subject.subject_name}&nbsp;
         </Stack>
       ),
     },

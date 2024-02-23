@@ -17,6 +17,7 @@ router = fastapi.APIRouter()
 @router.get("/class", response_model=List[Class])
 async def get_class_api(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     classes = get_classes(db, skip=skip, limit=limit)
+    print(classes)
     return classes
 
 

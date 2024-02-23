@@ -3,7 +3,7 @@ import { apiCall } from "../util/apiHelper";
 import { API_CLASS_URL } from "../util/config";
 import { StudentClass, ClassForm } from "../types/class";
 
-export const useGetclass = () => {
+export const useGetClass = () => {
   return useQuery<StudentClass[]>({
     queryKey: ["classList"],
     queryFn: async () => {

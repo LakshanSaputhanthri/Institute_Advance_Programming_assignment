@@ -1,6 +1,9 @@
 from sqlalchemy.orm import Session
 from db.models.classes import Class as ClassModel
-from pydantec_schemas.classes import ClassCreate
+from db.models.subject import Subject as SubjectModel
+from db.models.teacher import Teacher as TeacherModel
+
+from pydantec_schemas.classes import ClassCreate, Class
 
 
 # create class
@@ -18,7 +21,17 @@ def create_class(db: Session, classes: ClassCreate):
 
 # get all classes
 def get_classes(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(ClassModel).offset(skip).limit(limit).all()
+
+    classes = (
+        db.query(ClassModel)
+        .join(ClassModel.teacher)
+        .join(ClassModel.subject)
+        .offset(skip)
+        .limit(limit)
+        .all()
+    )
+
+    return classes
 
 
 # get teacher using teacher_id
