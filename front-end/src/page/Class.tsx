@@ -14,18 +14,12 @@ import {
 } from "@mui/material";
 import { Column } from "react-table";
 import { DataTable } from "../components/DataTable";
-import StudentRegistrationForm from "../components/forms/StudentRegisterForm";
 import { TitleBar } from "../components/TitleBar";
-import DeleteIcon from "@mui/icons-material/Delete";
 import EditNoteIcon from "@mui/icons-material/EditNote";
-import {
-  useDeleteStudentMutation,
-  useGetStudents,
-} from "../services/studentService";
-import { Student } from "../types/students";
 import { gradeList } from "../state/gradeList";
-import StudentDetailEditForm from "../components/forms/editForms/StudentDetailEditForm";
 import ClassRegistrationForm from "../components/forms/ClassRegisterForm";
+import { useGetclass } from "../services/classService";
+import { StudentClass } from "../types/class";
 const style = {
   position: "absolute",
   top: "50%",
@@ -37,41 +31,27 @@ const style = {
 export const Class = () => {
   const [grade, setGrade] = React.useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [isEditFormOpen, setIsEditFormOpen] = useState(false);
+  // const [isEditFormOpen, setIsEditFormOpen] = useState(false);
 
   const handleChange = (event: SelectChangeEvent) => {
     setGrade(event.target.value as string);
   };
-  const deleteMutation = useDeleteStudentMutation();
+  // const deleteMutation = useDeleteStudentMutation();
 
-  const { data } = useGetStudents();
-  const [studentId, setStudentId] = useState<number>(0);
+  const { data } = useGetclass();
+  // const [studentId, setStudentId] = useState<number>(0);
 
-  const columns: Column<Student>[] = [
-    {
-      Header: "Student Number",
-      accessor: "student_id",
-      id: "studentNumber",
-    },
-    { Header: "First Name", accessor: "first_name", id: "firstNamer" },
-    { Header: "Last Name", accessor: "last_name", id: "lastName" },
-    { Header: "Address", accessor: "address", id: "sage" },
-    { Header: "Phone Number", accessor: "phone_number", id: "phone_number" },
+  const columns: Column<StudentClass>[] = [
+    { Header: "Class Name", accessor: "class_name", id: "className" },
+    { Header: "Teacher Name", accessor: "class_name", id: "className" },
+    { Header: "Subject Name", accessor: "class_name", id: "className" },
+
     {
       Header: "Action",
       id: "action",
-      Cell: ({ row }) => (
+      Cell: () => (
         <Stack gap={1} direction={"row"}>
-          <EditNoteIcon
-            sx={{ color: "blue" }}
-            onClick={() => {
-              setIsEditFormOpen(true), setStudentId(row.original.student_id);
-            }}
-          />
-          <DeleteIcon
-            sx={{ color: "red" }}
-            onClick={() => deleteMutation.mutate(row.original.student_id)}
-          />
+          <EditNoteIcon sx={{ color: "blue" }} />
         </Stack>
       ),
     },
@@ -135,7 +115,7 @@ export const Class = () => {
           <ClassRegistrationForm onCancel={() => setIsOpen(false)} />
         </Box>
       </Modal>
-      <Modal open={isEditFormOpen}>
+      {/* <Modal open={isEditFormOpen}>
         <Box
           sx={{
             ...style,
@@ -149,7 +129,7 @@ export const Class = () => {
             studentId={studentId}
           />
         </Box>
-      </Modal>
+      </Modal> */}
     </Layout>
   );
 };

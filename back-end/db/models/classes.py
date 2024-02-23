@@ -8,17 +8,28 @@ from .mixins import Timestamp
 from .teacher import Teacher
 from .subject import Subject
 
+
 class Class(Timestamp, Base):
     __tablename__ = "class"
     class_id = Column(Integer, primary_key=True, index=True)
-    teacher_id = Column(Integer, ForeignKey(Teacher.teacher_id), unique=False, index=True, nullable=False)
-    subject_id = Column(Integer, ForeignKey(Subject.subject_id), unique=False, index=True, nullable=False)
+    teacher_id = Column(
+        Integer,
+        ForeignKey(Teacher.teacher_id),
+        unique=False,
+        index=True,
+        nullable=False,
+    )
+    class_name = Column(String, unique=True, index=True, nullable=False)
 
-    
+    subject_id = Column(
+        Integer,
+        ForeignKey(Subject.subject_id),
+        unique=False,
+        index=True,
+        nullable=False,
+    )
+
     teachers = relationship("Teacher", back_populates="classes")
     subject = relationship("Subject", back_populates="classes")
-    attendance=relationship("Attendance",back_populates="classes")
-    enrollment=relationship("Enrollment",back_populates="classes")
-
-
-
+    attendance = relationship("Attendance", back_populates="classes")
+    enrollment = relationship("Enrollment", back_populates="classes")

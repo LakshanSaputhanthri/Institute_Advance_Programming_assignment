@@ -3,3 +3,4 @@ export const API_HOST =
 
 export const API_STUDENT_URL = `${API_HOST}students`;
 export const API_TEACHER_URL = `${API_HOST}teachers`;
+export const API_CLASS_URL = `${API_HOST}class`;

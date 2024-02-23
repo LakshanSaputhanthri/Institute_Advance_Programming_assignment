@@ -6,8 +6,6 @@ class TeacherBase(BaseModel):
     email:str
     nic_number:str
 
-
-
 class TeacherCreate(TeacherBase):
     first_name:str
     last_name:str

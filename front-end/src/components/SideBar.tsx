@@ -20,11 +20,6 @@ const sideBarLinks = [
     icon: "",
   },
   {
-    title: "Payments",
-    link: "/payment",
-    icon: "",
-  },
-  {
     title: "Attendance",
     link: "/attendance",
     icon: "",

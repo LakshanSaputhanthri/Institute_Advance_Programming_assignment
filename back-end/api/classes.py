@@ -1,27 +1,29 @@
-from typing import Optional,List
+from typing import Optional, List
 
 import fastapi
-from  fastapi import Depends,HTTPException
+from fastapi import Depends, HTTPException
 from sqlalchemy.orm import Session
 
 
 from db.db_setup import get_db
-from api.utils.classes import create_class,get_classes
-from pydantec_schemas.classes import ClassCreate,Class
+from api.utils.classes import create_class, get_classes
+
+from pydantec_schemas.classes import ClassCreate, Class
 
 
-router=fastapi.APIRouter()
+router = fastapi.APIRouter()
 
 
-    
-@router.get("/class",response_model=List[Class])
-async def get_class_api(skip:int=0,limit:int=100,db:Session=Depends(get_db)):
-    classes=get_classes(db,skip=skip,limit=limit)
+@router.get("/class", response_model=List[Class])
+async def get_class_api(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    classes = get_classes(db, skip=skip, limit=limit)
     return classes
 
+
 @router.post("/class")
-async def create_class_api(classes:ClassCreate,db:Session=Depends(get_db)):
-    return create_class(db=db,classes=classes)
+async def create_class_api(classes: ClassCreate, db: Session = Depends(get_db)):
+    return create_class(db=db, classes=classes)
+
 
 # @router.post("/class")
 # async def create_teacher_api(teacher:TeacherCreate,db:Session=Depends(get_db)):
@@ -43,5 +45,3 @@ async def create_class_api(classes:ClassCreate,db:Session=Depends(get_db)):
 #     if teacher==None:
 #         raise HTTPException(status_code=404,detail="Teacher Not found")
 #     return  delete_teacher(db,teacher_id=id)
-
-
