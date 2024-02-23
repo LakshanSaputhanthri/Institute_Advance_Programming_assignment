@@ -10,7 +10,7 @@ export type StudentClass = {
   class_name: string;
 };
 export type ClassForm = {
-  teacher: number;
-  subject: number;
+  teacher_id: number;
+  subject_id: number;
   class_name: string;
 };

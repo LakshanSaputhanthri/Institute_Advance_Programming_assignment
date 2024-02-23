@@ -4,3 +4,6 @@ export type Subject = {
   created_at: string;
   updated_at: string;
 };
+export type SubjectForm = {
+  subject_name: string;
+};

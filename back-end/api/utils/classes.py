@@ -35,8 +35,9 @@ def get_classes(db: Session, skip: int = 0, limit: int = 100):
 
 
 # get teacher using teacher_id
-# def get_teacher(db:Session,teacher_id:int):
-#     return db.query(Teacher).filter(Teacher.id==teacher_id).first()
+def get_class_by_class_id(db: Session, class_id: int):
+    return db.query(ClassModel).filter(ClassModel.class_id == class_id).first()
+
 
 # get teacher using email
 # def get_teacher_by_email(db:Session,teacher_email:str):

@@ -20,43 +20,44 @@ import {
   useGetSubjects,
 } from "../../services/classService";
 import { ClassForm } from "../../types/class";
+import { AttendanceForm } from "../../types/attendance";
 
 interface Props {
   onCancel: () => void;
 }
 
-const ClassRegistrationForm = ({ onCancel }: Props) => {
-  const createMutation = useClassCreateMutations();
+const MarkAttendanceForm = ({ onCancel }: Props) => {
+  //   const createMutation = useClassCreateMutations();
   const teachers = useGetTeachers();
   const subjects = useGetSubjects();
 
-  const [formData, setFormData] = useState<ClassForm>({
-    class_name: "",
-    teacher_id: 1,
-    subject_id: 1,
+  const [formData, setFormData] = useState<AttendanceForm>({
+    class_id: 0,
+    student_id: 1,
+    isPresent: false,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleTeacherChange = (e: SelectChangeEvent) => {
-    setFormData({ ...formData, teacher_id: +e.target.value });
-  };
+  //   const handleTeacherChange = (e: SelectChangeEvent) => {
+  //     setFormData({ ...formData, teacher_id: +e.target.value });
+  //   };
 
-  const handleSubjectChange = (e: SelectChangeEvent) => {
-    setFormData({ ...formData, subject_id: +e.target.value });
-  };
+  //   const handleSubjectChange = (e: SelectChangeEvent) => {
+  //     setFormData({ ...formData, subject_id: +e.target.value });
+  //   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    createMutation.mutate(formData, {
-      onSuccess: () => {
-        toast.success("Class created successfully");
-        onCancel();
-      },
-    });
-  };
+  //   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //     e.preventDefault();
+  //     createMutation.mutate(formData, {
+  //       onSuccess: () => {
+  //         toast.success("Class created successfully");
+  //         onCancel();
+  //       },
+  //     });
+  //   };
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -70,7 +71,7 @@ const ClassRegistrationForm = ({ onCancel }: Props) => {
         }}
       >
         <Typography component="h1" variant="h5">
-          Class Registration
+          Mark Attendance
         </Typography>
         <form onSubmit={handleSubmit} style={{ width: "100%", marginTop: 16 }}>
           <Grid container spacing={2}>
@@ -131,7 +132,7 @@ const ClassRegistrationForm = ({ onCancel }: Props) => {
             marginTop={2}
           >
             <Button type="submit" variant="contained" color="primary">
-              Add New Class
+              Submit
             </Button>
             <Button
               type="button"
@@ -148,4 +149,4 @@ const ClassRegistrationForm = ({ onCancel }: Props) => {
   );
 };
 
-export default ClassRegistrationForm;
+export default MarkAttendanceForm;

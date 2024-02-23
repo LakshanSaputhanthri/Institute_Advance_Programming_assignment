@@ -1,24 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Layout } from "../components/Layout";
-import {
-  Box,
-  Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Modal,
-  Select,
-  SelectChangeEvent,
-  Stack,
-  TextField,
-} from "@mui/material";
+import { Box, Button, Modal, Stack } from "@mui/material";
 import { Column } from "react-table";
 import { DataTable } from "../components/DataTable";
 import { TitleBar } from "../components/TitleBar";
-import { gradeList } from "../state/gradeList";
 import ClassRegistrationForm from "../components/forms/ClassRegisterForm";
 import { StudentClass } from "../types/class";
 import { useGetClass } from "../services/classService";
+import AddNewSubjectForm from "../components/forms/AddNewSubjectForm";
 const style = {
   position: "absolute",
   top: "50%",
@@ -28,17 +17,10 @@ const style = {
 };
 
 export const Class = () => {
-  const [grade, setGrade] = React.useState("");
   const [isOpen, setIsOpen] = useState(false);
-  // const [isEditFormOpen, setIsEditFormOpen] = useState(false);
-
-  const handleChange = (event: SelectChangeEvent) => {
-    setGrade(event.target.value as string);
-  };
-  // const deleteMutation = useDeleteStudentMutation();
+  const [isOpenSubjectForm, setIsOpenSubjectForm] = useState(false);
 
   const { data } = useGetClass();
-  // const [studentId, setStudentId] = useState<number>(0);
 
   const columns: Column<StudentClass>[] = [
     { Header: "Class Name", accessor: "class_name", id: "className" },
@@ -66,46 +48,12 @@ export const Class = () => {
   return (
     <Layout>
       <TitleBar title={"Classes"} />
-      <Stack direction={"row"} gap={2} justifyContent={"space-between"}>
-        <Stack direction={"row"} gap={2}>
-          <TextField
-            id="outlined-basic"
-            label="Student Number"
-            variant="outlined"
-            size="small"
-          />
-          <TextField
-            id="outlined-basic"
-            label="First Name"
-            variant="outlined"
-            size="small"
-          />
-          <TextField
-            id="outlined-basic"
-            label="Last Name"
-            variant="outlined"
-            size="small"
-          />
-
-          <FormControl sx={{ width: "12rem" }} size="small">
-            <InputLabel id="demo-simple-select-label">Grade</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={grade}
-              label="Grade"
-              onChange={handleChange}
-            >
-              {gradeList.map((grade) => (
-                <MenuItem value={grade.value} key={grade.value}>
-                  {grade.grade}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Stack>
+      <Stack direction={"row"} gap={2} justifyContent={"end"}>
+        <Button variant="contained" onClick={() => setIsOpenSubjectForm(true)}>
+          Add New Subject
+        </Button>
         <Button variant="contained" onClick={() => setIsOpen(true)}>
-          Add New
+          Add New Class
         </Button>
       </Stack>
       {data && <DataTable data={data} columns={columns} />}
@@ -121,7 +69,7 @@ export const Class = () => {
           <ClassRegistrationForm onCancel={() => setIsOpen(false)} />
         </Box>
       </Modal>
-      {/* <Modal open={isEditFormOpen}>
+      <Modal open={isOpenSubjectForm}>
         <Box
           sx={{
             ...style,
@@ -130,12 +78,9 @@ export const Class = () => {
             justifyContent: "center",
           }}
         >
-          <StudentDetailEditForm
-            onCancel={() => setIsEditFormOpen(false)}
-            studentId={studentId}
-          />
+          <AddNewSubjectForm onCancel={() => setIsOpenSubjectForm(false)} />
         </Box>
-      </Modal> */}
+      </Modal>
     </Layout>
   );
 };
