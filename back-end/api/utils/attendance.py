@@ -36,12 +36,7 @@ def get_attendance(db: Session, skip: int = 0, limit: int = 100):
 
 
 def get_attendance_By_class(db: Session, class_id: int):
-    return (
-        db.query(Attendance)
-        .join(Attendance.student)
-        .filter(Attendance.class_id == class_id)
-        .all()
-    )
+    return db.query(Attendance).join(Attendance.student).all()
 
 
 # get student using student_id

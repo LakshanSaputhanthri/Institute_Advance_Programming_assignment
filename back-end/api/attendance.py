@@ -25,9 +25,9 @@ async def get_attendance_api(
     return students
 
 
-@router.get("/attendance/{class_id}")
-async def get_attendance_by_id_api(id: int, db: Session = Depends(get_db)):
-    student = get_attendance_By_class(db, class_id=id)
+@router.get("/attendance/{class_id}", response_model=List[Attendance])
+async def get_attendance_by_id_api(class_id: int, db: Session = Depends(get_db)):
+    student = get_attendance_By_class(db, class_id=class_id)
     if student == None:
         raise HTTPException(status_code=404, detail="Student Not found")
     return student

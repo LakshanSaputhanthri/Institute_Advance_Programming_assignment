@@ -6,6 +6,7 @@ import { Attendance } from "../page/Attendance";
 import { TeacherPage } from "../page/Teacher";
 import { Class } from "../page/Class";
 import { MarkAttendancePage } from "../page/MarkAttendancePage";
+import { ViewAttendancePage } from "../page/ViewAttendancePage";
 
 export const AppRoutes = () => {
   return (
@@ -21,7 +22,14 @@ export const AppRoutes = () => {
           <Route path="/teacher" element={<TeacherPage />} />
 
           <Route path="/attendance" element={<Attendance />} />
-          <Route path="/attendance/:classId" element={<MarkAttendancePage />} />
+          <Route
+            path="/attendance/mark/:classId"
+            element={<MarkAttendancePage />}
+          />
+          <Route
+            path="/attendance/view/:classId"
+            element={<ViewAttendancePage />}
+          />
         </Routes>
       </BrowserRouter>
     </>
