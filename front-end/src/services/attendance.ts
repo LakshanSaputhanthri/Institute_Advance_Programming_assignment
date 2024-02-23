@@ -12,7 +12,7 @@ export const useGetAttendanceByClassId = (classId: number) => {
         method: "GET",
         url: `${API_ATTENDANCE_URL}/${classId}`,
       });
-      return response;
+      return response || [];
     },
   });
 };

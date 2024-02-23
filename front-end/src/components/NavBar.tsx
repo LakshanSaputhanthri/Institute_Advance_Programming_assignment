@@ -1,5 +1,6 @@
 import { Box, Typography, Button } from "@mui/material";
 import { theme } from "../theme";
+import { Link } from "react-router-dom";
 
 export const NavBar = () => {
   return (
@@ -16,12 +17,13 @@ export const NavBar = () => {
       }}
     >
       <Typography variant="h5" sx={{ marginLeft: 2 }}>
-        {" "}
         Student Management System
       </Typography>
-      <Button variant="contained" sx={{ marginRight: 2 }}>
-        Logout
-      </Button>
+      <Link to={"/"}>
+        <Button variant="contained" sx={{ marginRight: 2 }}>
+          Logout
+        </Button>
+      </Link>
     </Box>
   );
 };

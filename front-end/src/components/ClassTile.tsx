@@ -1,7 +1,8 @@
-import { Avatar, Paper, Stack, Typography } from "@mui/material";
+import { Avatar, Button, Paper, Stack, Typography } from "@mui/material";
 import { Teacher } from "../types/teacher";
 import { blue } from "@mui/material/colors";
-import ForwardIcon from "@mui/icons-material/Forward";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import BorderColorIcon from "@mui/icons-material/BorderColor";
 import { Link } from "react-router-dom";
 
 interface Props {
@@ -15,7 +16,6 @@ export const ClassTile = ({ classId, className, teacher }: Props) => {
     <Paper
       sx={{
         borderRadius: "10px",
-        width: "35rem",
         display: "flex",
         padding: 2,
         alignItems: "center",
@@ -50,7 +50,20 @@ export const ClassTile = ({ classId, className, teacher }: Props) => {
       </Stack>
       <Stack display={"flex"} justifyContent={"flex-end"}>
         <Link to={`/attendance/${classId}`}>
-          <ForwardIcon sx={{ bgcolor: "green", color: "yellow" }} />
+          <Button sx={{ display: "flex", gap: 1 }}>
+            <Typography sx={{ fontSize: "12px", alignItems: "center" }}>
+              Mark Attendance
+            </Typography>
+            <BorderColorIcon sx={{ color: "blue" }} />
+          </Button>
+        </Link>
+        <Link to={`/attendance/${classId}`}>
+          <Button sx={{ display: "flex", gap: 1 }}>
+            <Typography sx={{ fontSize: "12px", alignItems: "center" }}>
+              View Attendance
+            </Typography>
+            <RemoveRedEyeIcon sx={{ color: "green" }} />
+          </Button>
         </Link>
       </Stack>
     </Paper>

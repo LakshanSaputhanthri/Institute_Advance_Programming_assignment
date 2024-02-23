@@ -16,6 +16,18 @@ export const useGetClass = () => {
     },
   });
 };
+export const useGetClassById = (class_id: number) => {
+  return useQuery<StudentClass>({
+    queryKey: ["classOne"],
+    queryFn: async () => {
+      const response: StudentClass = await apiCall({
+        method: "GET",
+        url: `${API_CLASS_URL}/${class_id}`,
+      });
+      return response;
+    },
+  });
+};
 
 export const useClassCreateMutations = () => {
   const queryClient = useQueryClient();

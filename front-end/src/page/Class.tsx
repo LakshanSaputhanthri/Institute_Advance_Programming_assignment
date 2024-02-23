@@ -8,6 +8,7 @@ import ClassRegistrationForm from "../components/forms/ClassRegisterForm";
 import { StudentClass } from "../types/class";
 import { useGetClass } from "../services/classService";
 import AddNewSubjectForm from "../components/forms/AddNewSubjectForm";
+import EnrollmentForm from "../components/forms/EnrollMentForm";
 const style = {
   position: "absolute",
   top: "50%",
@@ -19,6 +20,7 @@ const style = {
 export const Class = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenSubjectForm, setIsOpenSubjectForm] = useState(false);
+  const [isOpenEnrollmentForm, setIsOpenEnrollmentForm] = useState(false);
 
   const { data } = useGetClass();
 
@@ -49,6 +51,12 @@ export const Class = () => {
     <Layout>
       <TitleBar title={"Classes"} />
       <Stack direction={"row"} gap={2} justifyContent={"end"}>
+        <Button
+          variant="contained"
+          onClick={() => setIsOpenEnrollmentForm(true)}
+        >
+          Student Register for Class
+        </Button>
         <Button variant="contained" onClick={() => setIsOpenSubjectForm(true)}>
           Add New Subject
         </Button>
@@ -79,6 +87,18 @@ export const Class = () => {
           }}
         >
           <AddNewSubjectForm onCancel={() => setIsOpenSubjectForm(false)} />
+        </Box>
+      </Modal>
+      <Modal open={isOpenEnrollmentForm}>
+        <Box
+          sx={{
+            ...style,
+            width: "60%",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <EnrollmentForm onCancel={() => setIsOpenEnrollmentForm(false)} />
         </Box>
       </Modal>
     </Layout>
