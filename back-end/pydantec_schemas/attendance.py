@@ -20,6 +20,7 @@ class Attendance(AttendanceBase):
     updated_at: datetime
     student: Student
     classes: Class
+    isPresent: bool
 
     class config:
         orm_mode: True

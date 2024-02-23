@@ -9,6 +9,7 @@ export type Attendance = {
   student: Student;
   classes: StudentClass;
   subject: Subject;
+  isPresent: boolean;
 };
 
 export type AttendanceForm = {

@@ -49,7 +49,7 @@ export const ClassTile = ({ classId, className, teacher }: Props) => {
         </Stack>
       </Stack>
       <Stack display={"flex"} justifyContent={"flex-end"}>
-        <Link to={`/attendance/${classId}`}>
+        <Link to={`/attendance/mark/${classId}`}>
           <Button sx={{ display: "flex", gap: 1 }}>
             <Typography sx={{ fontSize: "12px", alignItems: "center" }}>
               Mark Attendance
@@ -57,7 +57,7 @@ export const ClassTile = ({ classId, className, teacher }: Props) => {
             <BorderColorIcon sx={{ color: "blue" }} />
           </Button>
         </Link>
-        <Link to={`/attendance/${classId}`}>
+        <Link to={`/attendance/view/${classId}`}>
           <Button sx={{ display: "flex", gap: 1 }}>
             <Typography sx={{ fontSize: "12px", alignItems: "center" }}>
               View Attendance

@@ -36,10 +36,10 @@ async def create_class_api(classes: ClassCreate, db: Session = Depends(get_db)):
 
 @router.get("/class/{id}")
 async def get_teacher_by_id_api(id: int, db: Session = Depends(get_db)):
-    teacher = get_class_by_class_id(db, class_id=id)
-    if teacher == None:
-        raise HTTPException(status_code=404, detail="Teacher Not found")
-    return teacher
+    classDetails = get_class_by_class_id(db, class_id=id)
+    if classDetails == None:
+        raise HTTPException(status_code=404, detail="class  Not found")
+    return classDetails
 
 
 # @router.delete("/teachers/{id}")
