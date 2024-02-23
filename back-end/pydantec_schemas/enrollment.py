@@ -1,26 +1,23 @@
 from pydantic import BaseModel
 from datetime import datetime
+from .student import Student
 
 
 class EnrollmentBase(BaseModel):
-   pass
+    pass
+
 
 class EnrollmentCreate(EnrollmentBase):
-    enrollment_id:int
-    student_id:int
-    class_id:int
-    
-    
+    student_id: int
+    class_id: int
+
 
 class Enrollment(EnrollmentBase):
-    enrollment_id:int
-    class_id:int
-    student_id:int
-    created_at:datetime
-    updated_at:datetime
-    
-    
-    
+    enrollment_id: int
+    class_id: int
+    student: Student
+    created_at: datetime
+    updated_at: datetime
+
     class config:
-        orm_mode:True
-    
+        orm_mode: True

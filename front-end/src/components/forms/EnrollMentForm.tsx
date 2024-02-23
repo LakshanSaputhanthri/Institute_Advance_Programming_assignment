@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   Button,
-  TextField,
   Typography,
   Grid,
   Paper,
@@ -14,38 +13,31 @@ import {
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 import { toast } from "react-toastify";
-import { useGetTeachers } from "../../services/teacherService";
-import {
-  useClassCreateMutations,
-  useGetSubjects,
-} from "../../services/classService";
-import { ClassForm } from "../../types/class";
+import { useGetClass } from "../../services/classService";
+import { StudentEnrollmentForm } from "../../types/enrollment";
+import { useEnrollmentCreateMutations } from "../../services/enrollmentService";
+import { useGetStudents } from "../../services/studentService";
 
 interface Props {
   onCancel: () => void;
 }
 
-const ClassRegistrationForm = ({ onCancel }: Props) => {
-  const createMutation = useClassCreateMutations();
-  const teachers = useGetTeachers();
-  const subjects = useGetSubjects();
+const EnrollmentForm = ({ onCancel }: Props) => {
+  const createMutation = useEnrollmentCreateMutations();
+  const students = useGetStudents();
+  const classes = useGetClass();
 
-  const [formData, setFormData] = useState<ClassForm>({
-    class_name: "",
-    teacher_id: 1,
-    subject_id: 1,
+  const [formData, setFormData] = useState<StudentEnrollmentForm>({
+    student_id: 1,
+    class_id: 1,
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
   const handleTeacherChange = (e: SelectChangeEvent) => {
-    setFormData({ ...formData, teacher_id: +e.target.value });
+    setFormData({ ...formData, student_id: +e.target.value });
   };
 
   const handleSubjectChange = (e: SelectChangeEvent) => {
-    setFormData({ ...formData, subject_id: +e.target.value });
+    setFormData({ ...formData, class_id: +e.target.value });
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -70,34 +62,23 @@ const ClassRegistrationForm = ({ onCancel }: Props) => {
         }}
       >
         <Typography component="h1" variant="h5">
-          Class Registration
+          Student Enrollment
         </Typography>
         <form onSubmit={handleSubmit} style={{ width: "100%", marginTop: 16 }}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                label="Class Name"
-                name="class_name"
-                value={formData.class_name}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
-                <InputLabel id="teacher-select-label">Teachers</InputLabel>
+                <InputLabel id="teacher-select-label">Student Name</InputLabel>
                 <Select
                   labelId="teacher-select-label"
                   id="teacher-select"
-                  value={formData.teacher_id.toString()}
+                  value={formData.student_id.toString()}
                   onChange={handleTeacherChange}
-                  name="teacher_id"
+                  name="student_id"
                 >
-                  {teachers.data &&
-                    teachers.data.map((item) => (
-                      <MenuItem key={item.teacher_id} value={item.teacher_id}>
+                  {students.data &&
+                    students.data.map((item) => (
+                      <MenuItem key={item.student_id} value={item.student_id}>
                         {item.first_name}&nbsp;{item.last_name}
                       </MenuItem>
                     ))}
@@ -106,18 +87,18 @@ const ClassRegistrationForm = ({ onCancel }: Props) => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
-                <InputLabel id="subject-select-label">Subjects</InputLabel>
+                <InputLabel id="subject-select-label">Class Name</InputLabel>
                 <Select
                   labelId="subject-select-label"
                   id="subject-select"
-                  name="subject_id"
-                  value={formData.subject_id.toString()}
+                  name="class_id"
+                  value={formData.class_id.toString()}
                   onChange={handleSubjectChange}
                 >
-                  {subjects.data &&
-                    subjects.data.map((item) => (
-                      <MenuItem value={item.subject_id} key={item.subject_id}>
-                        {item.subject_name}
+                  {classes.data &&
+                    classes.data.map((item) => (
+                      <MenuItem value={item.class_id} key={item.class_id}>
+                        {item.class_name}
                       </MenuItem>
                     ))}
                 </Select>
@@ -131,7 +112,7 @@ const ClassRegistrationForm = ({ onCancel }: Props) => {
             marginTop={2}
           >
             <Button type="submit" variant="contained" color="primary">
-              Add New Class
+              Submit
             </Button>
             <Button
               type="button"
@@ -148,4 +129,4 @@ const ClassRegistrationForm = ({ onCancel }: Props) => {
   );
 };
 
-export default ClassRegistrationForm;
+export default EnrollmentForm;

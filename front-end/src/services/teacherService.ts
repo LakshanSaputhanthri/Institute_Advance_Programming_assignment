@@ -60,6 +60,7 @@ export const useTeacherCreateMutations = () => {
     },
   });
 };
+
 export const useDeleteTeacherMutation = () => {
   const queryClient = useQueryClient();
   return useMutation({
