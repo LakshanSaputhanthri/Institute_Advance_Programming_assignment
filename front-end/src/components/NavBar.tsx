@@ -17,7 +17,7 @@ export const NavBar = () => {
       }}
     >
       <Typography variant="h5" sx={{ marginLeft: 2 }}>
-        Student Management System
+        Registration And Attendance Management System
       </Typography>
       <Link to={"/"}>
         <Button variant="contained" sx={{ marginRight: 2 }}>

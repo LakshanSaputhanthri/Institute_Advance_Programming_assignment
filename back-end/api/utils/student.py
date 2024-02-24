@@ -20,6 +20,7 @@ def create_student(db: Session, student: StudentCreate):
 
 # delete student
 def delete_student(db: Session, student_id: int):
+    print(student_id, "ghhggggsgsgsgs")
     delete_row = db.query(Student).filter(Student.student_id == student_id).delete()
     db.commit()
     return delete_row

@@ -1,17 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Layout } from "../components/Layout";
-import {
-  Box,
-  Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Modal,
-  Select,
-  SelectChangeEvent,
-  Stack,
-  TextField,
-} from "@mui/material";
+import { Box, Button, Modal, Stack } from "@mui/material";
 import { Column } from "react-table";
 import { DataTable } from "../components/DataTable";
 import StudentRegistrationForm from "../components/forms/StudentRegisterForm";
@@ -23,7 +12,6 @@ import {
   useGetStudents,
 } from "../services/studentService";
 import { Student } from "../types/students";
-import { gradeList } from "../state/gradeList";
 import StudentDetailEditForm from "../components/forms/editForms/StudentDetailEditForm";
 const style = {
   position: "absolute",
@@ -34,13 +22,9 @@ const style = {
 };
 
 export const StudentPage = () => {
-  const [grade, setGrade] = React.useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setGrade(event.target.value as string);
-  };
   const deleteMutation = useDeleteStudentMutation();
 
   const { data } = useGetStudents();
@@ -79,44 +63,7 @@ export const StudentPage = () => {
   return (
     <Layout>
       <TitleBar title={"Students"} />
-      <Stack direction={"row"} gap={2} justifyContent={"space-between"}>
-        <Stack direction={"row"} gap={2}>
-          <TextField
-            id="outlined-basic"
-            label="Student Number"
-            variant="outlined"
-            size="small"
-          />
-          <TextField
-            id="outlined-basic"
-            label="First Name"
-            variant="outlined"
-            size="small"
-          />
-          <TextField
-            id="outlined-basic"
-            label="Last Name"
-            variant="outlined"
-            size="small"
-          />
-
-          <FormControl sx={{ width: "12rem" }} size="small">
-            <InputLabel id="demo-simple-select-label">Grade</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={grade}
-              label="Grade"
-              onChange={handleChange}
-            >
-              {gradeList.map((grade) => (
-                <MenuItem value={grade.value} key={grade.value}>
-                  {grade.grade}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Stack>
+      <Stack direction={"row"} gap={2} justifyContent={"end"}>
         <Button variant="contained" onClick={() => setIsOpen(true)}>
           Add New
         </Button>
