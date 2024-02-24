@@ -17,7 +17,7 @@ export const Footer = () => {
         height: "2rem",
       }}
     >
-      Footer
+      Advanced Programming Group Project 2024
     </Box>
   );
 };
