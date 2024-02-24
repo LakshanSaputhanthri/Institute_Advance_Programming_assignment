@@ -11,13 +11,22 @@ export const ViewAttendancePage = () => {
   const getClassDetails = useGetClassById(parseInt(classId || ""));
   const attendance = useGetAttendanceByClassId(parseInt(classId || ""));
   const [searchText, setSearchText] = useState("");
-  const filteredAttendance = attendance.data?.filter((record) =>
-    record.created_at.includes(searchText)
-  );
+  const [searchName, setSearchName] = useState("");
+  const [searchLastName, setSearchLastName] = useState("");
+
+  const filteredAttendance = attendance.data?.filter((record) => {
+    const dateMatch = record.created_at.includes(searchText);
+    const nameMatch = record.student.first_name
+      .toLowerCase()
+      .includes(searchName.toLowerCase());
+    const lastNameMatch = record.student.last_name
+      .toLowerCase()
+      .includes(searchLastName.toLowerCase());
+    return dateMatch && nameMatch && lastNameMatch;
+  });
   return (
     <Layout>
       <Typography variant="h5">{getClassDetails.data?.class_name}</Typography>
-
       <Stack marginTop={2} direction={"row"} alignItems={"center"} gap={2}>
         <TextField
           placeholder="Search by Date"
@@ -26,7 +35,23 @@ export const ViewAttendancePage = () => {
           size="small"
           onChange={(e) => setSearchText(e.target.value)}
         />
-        <FilterListIcon onClick={() => setSearchText("")} />
+        <TextField
+          placeholder="Search by First Name"
+          value={searchName}
+          size="small"
+          onChange={(e) => setSearchName(e.target.value)}
+        />
+        <TextField
+          placeholder="Search by Last Name"
+          value={searchLastName}
+          size="small"
+          onChange={(e) => setSearchLastName(e.target.value)}
+        />
+        <FilterListIcon
+          onClick={() => {
+            setSearchText(""), setSearchName(""), setSearchLastName("");
+          }}
+        />
       </Stack>
       <Stack gap={2} marginTop={2}>
         <Stack
