@@ -2,16 +2,32 @@ import { useParams } from "react-router-dom";
 import { Layout } from "../components/Layout";
 import { useGetAttendanceByClassId } from "../services/attendance";
 import { useGetClassById } from "../services/classService";
-import { Stack, Typography } from "@mui/material";
+import { Stack, TextField, Typography } from "@mui/material";
 import moment from "moment";
-
+import { useState } from "react";
+import FilterListIcon from "@mui/icons-material/FilterList";
 export const ViewAttendancePage = () => {
   const { classId } = useParams();
   const getClassDetails = useGetClassById(parseInt(classId || ""));
   const attendance = useGetAttendanceByClassId(parseInt(classId || ""));
+  const [searchText, setSearchText] = useState("");
+  const filteredAttendance = attendance.data?.filter((record) =>
+    record.created_at.includes(searchText)
+  );
   return (
     <Layout>
       <Typography variant="h5">{getClassDetails.data?.class_name}</Typography>
+
+      <Stack marginTop={2} direction={"row"} alignItems={"center"} gap={2}>
+        <TextField
+          placeholder="Search by Date"
+          value={searchText}
+          type="date"
+          size="small"
+          onChange={(e) => setSearchText(e.target.value)}
+        />
+        <FilterListIcon onClick={() => setSearchText("")} />
+      </Stack>
       <Stack gap={2} marginTop={2}>
         <Stack
           direction={"row"}
@@ -75,7 +91,7 @@ export const ViewAttendancePage = () => {
             IsPresent
           </Typography>
         </Stack>
-        {attendance.data?.map((item) => (
+        {filteredAttendance?.map((item) => (
           <Stack
             direction={"row"}
             display={"flex"}

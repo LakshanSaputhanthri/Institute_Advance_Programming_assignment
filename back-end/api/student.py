@@ -11,7 +11,6 @@ from api.utils.student import (
     create_student,
     get_student,
     get_students,
-    get_student_by_email,
     delete_student,
     update_student,
 )
@@ -49,6 +48,7 @@ async def update_student_api(
 
 @router.delete("/students/{id}")
 async def delete_student_by_id_api(id: int, db: Session = Depends(get_db)):
+    print(id)
     student = get_student(db, student_id=id)
     if student == None:
         raise HTTPException(status_code=404, detail="Student Not found")

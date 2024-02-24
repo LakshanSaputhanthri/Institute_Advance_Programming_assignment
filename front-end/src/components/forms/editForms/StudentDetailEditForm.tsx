@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   TextField,
@@ -25,17 +25,32 @@ interface Props {
   onCancel: () => void;
   studentId: number;
 }
+
 const StudentDetailEditForm = ({ onCancel, studentId }: Props) => {
   const { data: studentData } = useGetStudent(studentId);
   const studentUpdateMutation = useStudentUpdateMutations(studentId);
 
   const [formData, setFormData] = useState<StudentEditForm>({
-    first_name: studentData?.first_name,
-    last_name: studentData?.last_name,
-    phone_number: studentData?.phone_number,
-    address: studentData?.address,
-    grade: studentData?.grade,
+    first_name: "",
+    last_name: "",
+    phone_number: 0,
+    address: "",
+    grade: 0,
   });
+
+  useEffect(() => {
+    // Update form data when student data changes
+    if (studentData) {
+      setFormData({
+        first_name: studentData.first_name,
+        last_name: studentData.last_name,
+        phone_number: studentData.phone_number,
+        address: studentData.address,
+        grade: studentData.grade,
+      });
+    }
+  }, [studentData]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -44,29 +59,32 @@ const StudentDetailEditForm = ({ onCancel, studentId }: Props) => {
     e.preventDefault();
     studentUpdateMutation.mutate(formData, {
       onSuccess: () => {
-        toast.success("Update Student Successfully"), onCancel();
+        toast.success("Update Student Successfully");
+        onCancel();
       },
     });
   };
+
   const handleGradeChange = (event: SelectChangeEvent) => {
     setFormData({ ...formData, grade: +event.target.value });
   };
 
   return (
     <Box sx={{ display: "100rem" }}>
-      <Paper
-        elevation={3}
-        style={{
-          padding: 16,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Typography component="h1" variant="h5">
-          Student Registration
-        </Typography>
-        {studentData && (
+      {studentData && (
+        <Paper
+          elevation={3}
+          style={{
+            padding: 16,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Typography component="h1" variant="h5">
+            Student Registration
+          </Typography>
+
           <form
             onSubmit={handleSubmit}
             style={{ width: "100%", marginTop: 16 }}
@@ -119,27 +137,23 @@ const StudentDetailEditForm = ({ onCancel, studentId }: Props) => {
                 />
               </Grid>
               <Grid item xs={12}>
-                {formData.grade && (
-                  <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">Grade</InputLabel>
-                    {
-                      <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        name="grade"
-                        value={formData.grade.toString()}
-                        label="Grade"
-                        onChange={handleGradeChange}
-                      >
-                        {gradeList.map((item) => (
-                          <MenuItem key={item.value} value={item.value}>
-                            {item.grade}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    }
-                  </FormControl>
-                )}
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Grade</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    name="grade"
+                    value={formData.grade?.toString()}
+                    label="Grade"
+                    onChange={handleGradeChange}
+                  >
+                    {gradeList.map((item) => (
+                      <MenuItem key={item.value} value={item.value}>
+                        {item.grade}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               </Grid>
             </Grid>
             <Stack
@@ -161,14 +175,14 @@ const StudentDetailEditForm = ({ onCancel, studentId }: Props) => {
                 variant="contained"
                 color="primary"
                 style={{ marginTop: 16 }}
-                onClick={() => onCancel()}
+                onClick={onCancel}
               >
                 Cancel
               </Button>
             </Stack>
           </form>
-        )}
-      </Paper>
+        </Paper>
+      )}
     </Box>
   );
 };
