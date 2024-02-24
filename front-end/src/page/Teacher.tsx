@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Layout } from "../components/Layout";
-import { Box, Button, Modal, Stack, TextField } from "@mui/material";
+import { Box, Button, Modal, Stack } from "@mui/material";
 import { Column } from "react-table";
 import { DataTable } from "../components/DataTable";
 import { TitleBar } from "../components/TitleBar";
@@ -59,27 +59,7 @@ export const TeacherPage = () => {
   return (
     <Layout>
       <TitleBar title={"Teacher"} />
-      <Stack direction={"row"} gap={2} justifyContent={"space-between"}>
-        <Stack direction={"row"} gap={2}>
-          <TextField
-            id="outlined-basic"
-            label="Teacher Id"
-            variant="outlined"
-            size="small"
-          />
-          <TextField
-            id="outlined-basic"
-            label="First Name"
-            variant="outlined"
-            size="small"
-          />
-          <TextField
-            id="outlined-basic"
-            label="Last Name"
-            variant="outlined"
-            size="small"
-          />
-        </Stack>
+      <Stack direction={"row"} gap={2} justifyContent={"end"}>
         <Button variant="contained" onClick={() => setIsOpen(true)}>
           Add New
         </Button>
