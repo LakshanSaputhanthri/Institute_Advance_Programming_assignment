@@ -4,6 +4,7 @@ import { useGetClass } from "../services/classService";
 import { ClassTile } from "../components/ClassTile";
 import { useEffect, useState } from "react";
 import { StudentClass } from "../types/class";
+import { TitleBar } from "../components/TitleBar";
 
 export const Attendance = () => {
   const { data } = useGetClass();
@@ -16,6 +17,8 @@ export const Attendance = () => {
 
   return (
     <Layout>
+      <TitleBar title={"Attendance Register"} />
+
       <Stack
         gap={2}
         sx={{

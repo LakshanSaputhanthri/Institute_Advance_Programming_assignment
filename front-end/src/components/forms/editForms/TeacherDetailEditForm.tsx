@@ -72,7 +72,7 @@ const TeacherDetailsEditForm = ({ onCancel, teacherId }: Props) => {
         }}
       >
         <Typography component="h1" variant="h5">
-          Teacher Registration
+          Teacher Details
         </Typography>
         {teacherData && (
           <form
