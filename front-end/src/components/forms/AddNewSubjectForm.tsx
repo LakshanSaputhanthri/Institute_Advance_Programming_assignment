@@ -56,7 +56,7 @@ const AddNewSubjectForm = ({ onCancel }: Props) => {
                 variant="outlined"
                 required
                 fullWidth
-                label="Class Name"
+                label="Subject Name"
                 name="subject_name"
                 value={formData.subject_name}
                 onChange={handleChange}
